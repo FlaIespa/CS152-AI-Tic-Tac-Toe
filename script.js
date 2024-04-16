@@ -116,3 +116,62 @@ function updateScores() {
 // Start the game
 initialize();
 
+// AI logic using minimax algorithm with alpha-beta pruning
+function getBestMove() {
+    let bestScore = -Infinity;
+    let move;
+    for (let i = 0; i < grid.length; i++) {
+        if (grid[i] === EMPTY) {
+            grid[i] = PLAYER_O;
+            let score = minimax(grid, 0, false, -Infinity, Infinity);
+            grid[i] = EMPTY;
+            if (score > bestScore) {
+                bestScore = score;
+                move = i;
+            }
+        }
+    }
+    return move;
+}
+
+function minimax(grid, depth, isMaximizingPlayer, alpha, beta) {
+    if (checkForWin(PLAYER_X)) {
+        return -10 + depth;
+    } else if (checkForWin(PLAYER_O)) {
+        return 10 - depth;
+    } else if (grid.every(cell => cell !== EMPTY)) {
+        return 0;
+    }
+
+    if (isMaximizingPlayer) {
+        let bestScore = -Infinity;
+        for (let i = 0; i < grid.length; i++) {
+            if (grid[i] === EMPTY) {
+                grid[i] = PLAYER_O;
+                let score = minimax(grid, depth + 1, false, alpha, beta);
+                grid[i] = EMPTY;
+                bestScore = Math.max(bestScore, score);
+                alpha = Math.max(alpha, score);
+                if (beta <= alpha) {
+                    break;
+                }
+            }
+        }
+        return bestScore;
+    } else {
+        let bestScore = Infinity;
+        for (let i = 0; i < grid.length; i++) {
+            if (grid[i] === EMPTY) {
+                grid[i] = PLAYER_X;
+                let score = minimax(grid, depth + 1, true, alpha, beta);
+                grid[i] = EMPTY;
+                bestScore = Math.min(bestScore, score);
+                beta = Math.min(beta, score);
+                if (beta <= alpha) {
+                    break;
+                }
+            }
+        }
+        return bestScore;
+    }
+}
