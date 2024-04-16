@@ -1,0 +1,66 @@
+body {
+    background-color: rgb(32, 32, 32);
+    color: rgb(230, 230, 230);
+    text-align: center;
+    font-family: 'Indie Flower', cursive;
+    font-size: 18px;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 4em;
+    margin: 0.5em 0;
+}
+
+#table_game {
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.td_game {
+    border: 4px solid rgb(230, 230, 230);
+    width: 90px;
+    height: 90px;
+    padding: 0;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+.fixed {
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+    display: block;
+}
+
+.th_list, .td_list {
+    font-size: 1.5em;
+    padding: 10px;
+}
+
+#restart {
+    display: inline-block;
+    margin: 20px;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.playerX {
+    color: darksalmon;
+}
+
+.playerO {
+    color: aquamarine;
+}
+
+.win-color {
+    background-color: rgb(240, 240, 240);
+}
+
+table {
+    margin-bottom: 20px;
+}
+
+/* You can add additional styling below as needed */
