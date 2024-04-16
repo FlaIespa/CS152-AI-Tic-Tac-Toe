@@ -6,7 +6,7 @@ const PLAYER_O = 'O';
 const EMPTY = ' ';
 
 // Variables to keep track of the game state
-let currentPlayer = PLAYER_X,
+let currentPlayer = PLAYER_X, 
     grid = new Array(9).fill(EMPTY),
     gameOver = false,
     score = { 'X': 0, 'O': 0, 'ties': 0 };
@@ -29,21 +29,18 @@ function initialize() {
     document.getElementById('restart').addEventListener('click', resetGame);
 }
 
-// Handle cell click
 function cellClicked(event) {
     const cell = event.target;
     const index = parseInt(cell.id.substring(4), 10);
 
     if (grid[index] !== EMPTY || gameOver) {
-        return; // Cell is already taken, or the game is over
+        return; 
     }
 
-    // Update grid and UI
     grid[index] = currentPlayer;
     cell.textContent = currentPlayer;
-    cell.classList.add('player' + currentPlayer); // Add color class based on the player
+    cell.classList.add('player' + currentPlayer); 
     
-    // Check for a win or tie
     if (checkForWin(currentPlayer)) {
         gameOver = true;
         score[currentPlayer]++;
@@ -56,16 +53,14 @@ function cellClicked(event) {
         alert('Tie game!');
         updateScores();
     } else {
-        // Swap players
         currentPlayer = currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
         
-        // If the current player is AI (PLAYER_O), let AI make a move
         if (currentPlayer === PLAYER_O) {
             const aiMove = getBestMove();
             const aiCell = document.getElementById('cell' + aiMove);
             setTimeout(() => {
                 cellClicked({ target: aiCell });
-            }, 1000); // Delay for better visualization
+            }, 1000); 
         }
     }
 }
