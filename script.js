@@ -6,23 +6,23 @@ const PLAYER_O = 'O';
 const EMPTY = ' ';
 
 // Variables to keep track of the game state
-let currentPlayer = PLAYER_X, 
-    grid = new Array(9).fill(EMPTY),
+let currentPlayer = PLAYER_X,
+    grid = new Array(16).fill(EMPTY), 
     gameOver = false,
     score = { 'X': 0, 'O': 0, 'ties': 0 };
 
-// Winning combinations using the index of the grid
+// Winning combinations for a 4x4 board
 const winningCombinations = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-    [0, 4, 8], [2, 4, 6]             // Diagonals
+    [0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15], // Rows
+    [0, 4, 8, 12], [1, 5, 9, 13], [2, 6, 10, 14], [3, 7, 11, 15], // Columns
+    [0, 5, 10, 15], [3, 6, 9, 12]                                 // Diagonals
 ];
 
-// Initialize game
 function initialize() {
-    document.querySelectorAll('.td_game div').forEach(cell => {
+    document.querySelectorAll('.td_game div').forEach((cell, index) => {
         cell.textContent = '';
-        cell.className = 'fixed'; // Reset class
+        cell.className = 'fixed';
+        cell.id = 'cell' + index;  // Assigns a specific id for each cell
         cell.addEventListener('click', cellClicked);
     });
     updateScores();
@@ -32,89 +32,65 @@ function initialize() {
 function cellClicked(event) {
     const cell = event.target;
     const index = parseInt(cell.id.substring(4), 10);
-
-    if (grid[index] !== EMPTY || gameOver) {
-        return; 
+    if (grid[index] === EMPTY && !gameOver) {
+        grid[index] = currentPlayer;
+        cell.textContent = currentPlayer;
+        cell.classList.add('player' + currentPlayer);
+        checkGameStatus(); // Checks here for win or draw
+        currentPlayer = (currentPlayer === PLAYER_X) ? PLAYER_O : PLAYER_X; 
+        if (currentPlayer === PLAYER_O) {
+            setTimeout(aiMove, 1000); // Delay AI move to allow UI to update
+        }
     }
+}
 
-    grid[index] = currentPlayer;
-    cell.textContent = currentPlayer;
-    cell.classList.add('player' + currentPlayer); 
-    
+function checkGameStatus() {
     if (checkForWin(currentPlayer)) {
-        gameOver = true;
-        score[currentPlayer]++;
         alert(`Player ${currentPlayer} wins!`);
         updateScores();
-        highlightWin();
-    } else if (grid.every(cell => cell !== EMPTY)) {
         gameOver = true;
-        score['ties']++;
+    } else if (grid.every(cell => cell !== EMPTY)) {
         alert('Tie game!');
+        score['ties']++;
         updateScores();
-    } else {
-        currentPlayer = currentPlayer === PLAYER_X ? PLAYER_O : PLAYER_X;
-        
-        if (currentPlayer === PLAYER_O) {
-            const aiMove = getBestMove();
-            const aiCell = document.getElementById('cell' + aiMove);
-            setTimeout(() => {
-                cellClicked({ target: aiCell });
-            }, 1000); 
-        }
+        gameOver = true;
     }
 }
 
-// Check for a win
+function aiMove() {
+    const move = getBestMove();
+    if (move !== -1) {
+        document.getElementById('cell' + move).click();
+    }
+}
+
 function checkForWin(player) {
     return winningCombinations.some(combination => {
-        if (combination.every(index => grid[index] === player)) {
-            return true;
-        }
-        return false;
+        return combination.every(index => grid[index] === player);
     });
 }
 
-// Highlight the winning combination
-function highlightWin() {
-    winningCombinations.forEach(combination => {
-        const [a, b, c] = combination;
-        const cellA = document.getElementById('cell' + a);
-        const cellB = document.getElementById('cell' + b);
-        const cellC = document.getElementById('cell' + c);
-        if (grid[a] === grid[b] && grid[b] === grid[c] && grid[a] !== EMPTY) {
-            cellA.style.backgroundColor = cellB.style.backgroundColor = cellC.style.backgroundColor = 'white';
-        }
-    });
-}
-
-// Reset the game
 function resetGame() {
     grid.fill(EMPTY);
     gameOver = false;
     currentPlayer = PLAYER_X;
     document.querySelectorAll('.td_game div').forEach(cell => {
         cell.textContent = '';
-        cell.classList.remove('playerX', 'playerO');
-        cell.style.backgroundColor = 'black'; // Reset cell color
+        cell.className = 'fixed';
     });
     updateScores();
 }
 
-// Update the scoreboard
 function updateScores() {
     document.getElementById('player_score').textContent = score['X'];
     document.getElementById('computer_score').textContent = score['O'];
     document.getElementById('tie_score').textContent = score['ties'];
 }
 
-// Start the game
-initialize();
-
 // AI logic using minimax algorithm with alpha-beta pruning
 function getBestMove() {
     let bestScore = -Infinity;
-    let move;
+    let move = -1;
     for (let i = 0; i < grid.length; i++) {
         if (grid[i] === EMPTY) {
             grid[i] = PLAYER_O;
@@ -130,13 +106,9 @@ function getBestMove() {
 }
 
 function minimax(grid, depth, isMaximizingPlayer, alpha, beta) {
-    if (checkForWin(PLAYER_X)) {
-        return -10 + depth;
-    } else if (checkForWin(PLAYER_O)) {
-        return 10 - depth;
-    } else if (grid.every(cell => cell !== EMPTY)) {
-        return 0;
-    }
+    if (checkForWin(PLAYER_X)) return -10 + depth;
+    if (checkForWin(PLAYER_O)) return 10 - depth;
+    if (grid.every(cell => cell !== EMPTY)) return 0;
 
     if (isMaximizingPlayer) {
         let bestScore = -Infinity;
@@ -145,11 +117,9 @@ function minimax(grid, depth, isMaximizingPlayer, alpha, beta) {
                 grid[i] = PLAYER_O;
                 let score = minimax(grid, depth + 1, false, alpha, beta);
                 grid[i] = EMPTY;
-                bestScore = Math.max(bestScore, score);
+                bestScore = Math.max(score, bestScore);
                 alpha = Math.max(alpha, score);
-                if (beta <= alpha) {
-                    break;
-                }
+                if (beta <= alpha) break;
             }
         }
         return bestScore;
@@ -160,11 +130,9 @@ function minimax(grid, depth, isMaximizingPlayer, alpha, beta) {
                 grid[i] = PLAYER_X;
                 let score = minimax(grid, depth + 1, true, alpha, beta);
                 grid[i] = EMPTY;
-                bestScore = Math.min(bestScore, score);
+                bestScore = Math.min(score, bestScore);
                 beta = Math.min(beta, score);
-                if (beta <= alpha) {
-                    break;
-                }
+                if (beta <= alpha) break;
             }
         }
         return bestScore;
