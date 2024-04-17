@@ -4,15 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-tac-toe</title>
-    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet"> <!-- Link to Google Fonts for 'Indie Flower' font -->
+    <link rel="stylesheet" href="style.css"> <!-- Link to CSS file for styling -->
 </head>
-<body onload="initialize()">
-    <h1>Tic-Tac-Toe</h1>
-    <table id="table_game">
+<body onload="initialize()"> <!-- Calls the initialize() function when the page loads -->
+    <h1>Tic-Tac-Toe</h1> <!-- Main heading of the game -->
+    <table id="table_game"> <!-- Game board is represented as a table -->
         <!-- Row 1 -->
         <tr>
-            <td class="td_game"><div id="cell0" onclick="cellClicked(this.id)" class="fixed"></div></td>
+            <td class="td_game"><div id="cell0" onclick="cellClicked(this.id)" class="fixed"></div></td> <!-- Individual cell with unique ID and event listener for the clicking -->
             <td class="td_game"><div id="cell1" onclick="cellClicked(this.id)" class="fixed"></div></td>
             <td class="td_game"><div id="cell2" onclick="cellClicked(this.id)" class="fixed"></div></td>
             <td class="td_game"><div id="cell3" onclick="cellClicked(this.id)" class="fixed"></div></td>
@@ -39,19 +39,19 @@
             <td class="td_game"><div id="cell15" onclick="cellClicked(this.id)" class="fixed"></div></td>
         </tr>
     </table>
-    <div id="restart" title="Start new game" onclick="restartGame()">Restart</div>
-    <table>
+    <div id="restart" title="Start new game" onclick="restartGame()">Restart</div> <!-- Restart button to start a new game -->
+    <table> <!-- Table to display scores -->
         <tr>
-            <th class="th_list">Computer</th>
-            <th class="th_list">Draws</th>
-            <th class="th_list">Player</th>
+            <th class="th_list">Computer</th> <!-- Column header for computer score -->
+            <th class="th_list">Draws</th> <!-- Column header for tie score -->
+            <th class="th_list">Player</th> <!-- Column header for player score -->
         </tr>
         <tr>
-            <td class="td_list" id="computer_score">0</td>
-            <td class="td_list" id="tie_score">0</td>
-            <td class="td_list" id="player_score">0</td>
+            <td class="td_list" id="computer_score">0</td> <!-- Computer score displayed -->
+            <td class="td_list" id="tie_score">0</td> <!-- Tie score displayed -->
+            <td class="td_list" id="player_score">0</td> <!-- Player score displayed -->
         </tr>
     </table>
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Link to JavaScript file for game logic -->
 </body>
 </html>

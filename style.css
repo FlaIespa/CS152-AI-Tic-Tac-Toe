@@ -1,66 +1,77 @@
+/* Set global styles for the entire document body */
 body {
-    background-color: rgb(32, 32, 32);
-    color: rgb(230, 230, 230);
-    text-align: center;
-    font-family: 'Indie Flower', cursive;
-    font-size: 18px;
-    margin: 0;
-    padding: 20px;
+    background-color: rgb(32, 32, 32); /* Set background color */
+    color: rgb(230, 230, 230); /* Set text color */
+    text-align: center; /* Center-align text */
+    font-family: 'Indie Flower', cursive; /* Use 'Indie Flower' font */
+    font-size: 18px; /* Set default font size */
+    margin: 0; /* Remove default margins */
+    padding: 20px; /* Add padding around content */
 }
 
+/* Style for main heading */
 h1 {
-    font-size: 4em;
-    margin: 0.5em 0;
+    font-size: 4em; /* Set large font size */
+    margin: 0.5em 0; /* Add margin top and bottom */
 }
 
+/* Style for the game table */
 #table_game {
-    margin: 20px auto;
-    border-collapse: collapse;
-    width: auto; /* Ensure the table fits nicely in the view */
+    margin: 20px auto; /* Center-align the table and add margin */
+    border-collapse: collapse; /* Removes table borders */
+    width: auto; /* Ensure the table fits in the view */
 }
 
+/* Style for individual cells in the game grid */
 .td_game {
-    border: 4px solid rgb(230, 230, 230);
+    border: 4px solid rgb(230, 230, 230); /* Add border to cells */
     width: 80px; /* Adjusted for a larger grid to maintain aspect */
-    height: 80px;
-    padding: 0;
-    vertical-align: middle;
-    text-align: center;
-    cursor: pointer;
+    height: 80px; /* Set fixed height for cells */
+    padding: 0; /* Remove padding */
+    vertical-align: middle; /* Center-align content vertically */
+    text-align: center; /* Center-align content horizontally */
+    cursor: pointer; /* Show pointer cursor on hover */
 }
 
+/* Style for fixed elements inside cells */
 .fixed {
     width: 100%; /* Ensures the div fills the td */
-    height: 100%;
+    height: 100%; /* Ensures the div fills the td */
     line-height: 80px; /* Adjust line height to match new height */
-    display: block;
+    display: block; /* Display as block element */
     font-size: 2em; /* Larger font size for better visibility */
 }
 
+/* Styles for table headers and data cells */
 .th_list, .td_list {
-    font-size: 1.5em;
-    padding: 10px;
+    font-size: 1.5em; /* Sets font size */
+    padding: 10px; /* Adds padding */
 }
 
+/* Style for the restart button */
 #restart {
-    display: inline-block;
-    margin: 20px;
-    font-size: 2em;
-    cursor: pointer;
+    display: inline-block; /* Display as inline-block element */
+    margin: 20px; /* Adds margin */
+    font-size: 2em; /* Sets font size */
+    cursor: pointer; /* Shows the pointer cursor on hover */
 }
 
+/* Style for player X */
 .playerX {
-    color: darksalmon;
+    color: darksalmon; /* Set color for player X */
 }
 
+/* Style for player O */
 .playerO {
-    color: aquamarine;
+    color: aquamarine; /* Set color for player O */
 }
 
+/* Style for the winning color */
 .win-color {
-    background-color: lightgreen; /* More visible win color */
+    background-color: lightgreen; /* Set background color for win */
 }
 
+/* Style for general tables */
 table {
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Add margin to the bottom of tables */
 }
