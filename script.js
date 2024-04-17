@@ -39,7 +39,7 @@ function cellClicked(event) {
         checkGameStatus(); // Checks here for win or draw
         currentPlayer = (currentPlayer === PLAYER_X) ? PLAYER_O : PLAYER_X; 
         if (currentPlayer === PLAYER_O) {
-            setTimeout(aiMove, 1000); // Delay AI move to allow UI to update
+            setTimeout(aiMove, 1000); 
         }
     }
 }

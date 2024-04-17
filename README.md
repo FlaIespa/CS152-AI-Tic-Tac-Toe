@@ -1,4 +1,3 @@
-
 # Tic-Tac-Toe with AI Opponent
 
 This repository contains a simple implementation of the classic Tic-Tac-Toe game with an AI opponent using the minimax algorithm with alpha-beta pruning.
@@ -34,14 +33,28 @@ To play the Tic-Tac-Toe game:
 - CSS
 - JavaScript
 
-## Credits
+## Project Structure
 
-This project is inspired by various tutorials and resources available online for implementing the minimax algorithm in Tic-Tac-Toe games.
+- `index.html`: Main HTML file containing the game interface.
+- `script.js`: JavaScript file containing the game logic, including AI opponent implementation.
+- `style.css`: CSS file for styling the game interface.
+
+## Overview of Minimax Algorithm and Alpha-Beta Pruning
+
+The AI opponent in this Tic-Tac-Toe game utilizes the minimax algorithm with alpha-beta pruning for decision-making. Minimax is a recursive algorithm that aims to minimize the possible loss for a worst-case scenario, while alpha-beta pruning reduces the number of nodes evaluated by the minimax algorithm.
+
+## Known Issues/Limitations
+
+- To consider the many combinatorial possibilities for the AI in the first two moves, it takes a minute for the AI to add its move. Thus, when you are playing, be mindful that the first two plays of AI will take a bit to actually load. After that, because it will consider less options, it will only take the time I have set to simulate the AI 'thinking' before choosing the next move in here 
+
+        if (currentPlayer === PLAYER_O) {
+            setTimeout(aiMove, 1000); 
+        }
+
+## Resources and Credits
 
 - [W3Schools - HTML, CSS, JavaScript](https://www.w3schools.com/)
 - [GeeksforGeeks - Minimax Algorithm in Game Theory](https://www.geeksforgeeks.org/minimax-algorithm-in-game-theory-set-1-introduction/)
+- [Mozilla Developer Network (MDN) - JavaScript Documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Codecademy - Learn JavaScript](https://www.codecademy.com/learn/introduction-to-javascript)
 - Russell, Stuart, and Peter Norvig. *Artificial Intelligence: A Modern Approach.* Pearson, 2021.
-
-
-
-
